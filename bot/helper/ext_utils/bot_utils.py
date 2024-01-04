@@ -192,7 +192,8 @@ def get_readable_message():
         else:
             msg += f"\n<b>├Size: {download.size()}</b>"
         msg += f"\n<b>├Past:</b> {get_readable_time(time() - download.message.date.timestamp())}"
-        msg += f"\n<b>└❌/_{download.gid()[:8]}</b>\n\n"
+        msg += f"\n<b>├Mode:</b> {download.upload_details['mode']}"
+        msg += f"\n<b>└❌/Stop_{download.gid()[:8]}</b>\n\n"
 
 
     if len(msg) == 0:
