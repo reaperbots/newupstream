@@ -147,8 +147,8 @@ def progress_bar(pct):
         pct = float(pct.strip('%'))
     p = min(max(pct, 0), 100)
     cFull = int((p + 5)// 10)
-    p_str = '⣿' * cFull
-    p_str += '⣀' * (10 - cFull)
+    p_str = '▮' * cFull
+    p_str += '▯' * (10 - cFull)
     return p_str
 
 
@@ -174,13 +174,13 @@ def get_readable_message():
         msg += f"<b>┌{download.status()}...</b>"
         if download.status() not in [MirrorStatus.STATUS_SPLITTING, MirrorStatus.STATUS_SEEDING]:
             msg += f"\n├<code>{progress_bar(download.progress())}</code> {download.progress()}"
-            msg += f"\n<b>├Processed:</b>{download.processed_bytes()} of {download.size()}"
+            msg += f"\n<b>├Processed: </b>{download.processed_bytes()} of {download.size()}"
             msg += f"\n<b>├Speed: </b>{download.speed()}"
             msg += f'\n<b>├ETA: </b>{download.eta()}'
-            msg += f"\n<b>├User:</b>{source(download)}"
+            msg += f"\n<b>├User: </b> {source(download)}"
             if hasattr(download, 'seeders_num'):
                 try:
-                    msg += f"\n<b><b>Seeders:</b> {download.seeders_num()} | 🪀<b>Leechers:</b> {download.leechers_num()}"
+                    msg += f"\n<b>S/L:</b> {download.seeders_num()}/{download.leechers_num()}"
                 except:
                     pass
         elif download.status() == MirrorStatus.STATUS_SEEDING:
@@ -211,10 +211,10 @@ def get_readable_message():
         buttons.ibutton(f"{PAGE_NO}/{PAGES}", "status ref")
         buttons.ibutton("Next", "status nex")
         button = buttons.build_menu(3)
-    msg += f"\n<b> Tasks</b>: {tasks}{bmax_task}"
-    msg += f"\n<b> Uptime</b>: {currentTime}"
+    msg += f"\n<b>✷ Tasks</b>: {tasks}{bmax_task}"
+    msg += f"\n<b>✷ Uptime</b>: {currentTime}"
     msg += f"<b>    DL</b>: {get_readable_file_size(dl_speed)}/s"
-    msg += f"\n<b> Free Disk</b>: {get_readable_file_size(disk_usage('/usr/src/app/downloads/').free)}"
+    msg += f"\n<b>✷ Free Disk</b>: {get_readable_file_size(disk_usage('/usr/src/app/downloads/').free)}"
     msg += f"<b>  UL</b>: {get_readable_file_size(up_speed)}/s"
     return msg, button
 
