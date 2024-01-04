@@ -176,7 +176,7 @@ def get_readable_message():
             msg += f"\n├<code>{progress_bar(download.progress())}</code> {download.progress()}"
             msg += f"\n<b>├Processed:</b>{download.processed_bytes()} of {download.size()}"
             msg += f"\n<b>├Speed: </b>{download.speed()}"
-            msg += f'<b> | ETA: </b>{download.eta()}'
+            msg += f'\n<b>├ETA: </b>{download.eta()}'
             msg += f"\n<b>├User:</b>{source(download)}"
             if hasattr(download, 'seeders_num'):
                 try:
