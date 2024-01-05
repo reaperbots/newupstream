@@ -180,7 +180,7 @@ def get_readable_message():
             msg += f"\n<b>├User: </b> {source(download)}"
             if hasattr(download, 'seeders_num'):
                 try:
-                    msg += f"\n<b>S/L:</b> {download.seeders_num()}/{download.leechers_num()}"
+                    msg += f"\n<b>├S/L:</b> {download.seeders_num()}/{download.leechers_num()}"
                 except:
                     pass
         elif download.status() == MirrorStatus.STATUS_SEEDING:
