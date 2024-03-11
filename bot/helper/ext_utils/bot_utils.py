@@ -171,11 +171,10 @@ def get_readable_message():
         globals()['PAGE_NO'] = PAGES
     for download in list(download_dict.values())[STATUS_START:STATUS_LIMIT+STATUS_START]:
         msg += f"<u><b>⌬ {escape(f'{download.name()}')}</u></b>\n\n"
-        msg += f"<blockquote><q><b>┌{download.status()}...</b>"
+        msg += f"<blockquote><q><b>┌{download.status()}  : {download.speed()}</b>"
         if download.status() not in [MirrorStatus.STATUS_SPLITTING, MirrorStatus.STATUS_SEEDING]:
             msg += f"\n<b>├</b><code>{progress_bar(download.progress())}</code> <b>{download.progress()}</b>"
             msg += f"\n<b>├Processed: </b>{download.processed_bytes()} of {download.size()}"
-            msg += f"\n<b>├Speed: </b>{download.speed()}"
             msg += f'\n<b>├ETA: </b>{download.eta()}'
             msg += f"\n<b>├User: </b> {source(download)}"
             if hasattr(download, 'seeders_num'):
