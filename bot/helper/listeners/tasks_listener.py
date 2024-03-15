@@ -76,7 +76,7 @@ class MirrorLeechListener:
         
     async def onDownloadStart(self):
         if self.isSuperGroup and config_dict['INCOMPLETE_TASK_NOTIFIER'] and DATABASE_URL:
-            await DbManger().add_incomplete_task(self.message.chat.id, self.message.link, self.tag)
+            await DbManager().add_incomplete_task(self.message.chat.id, self.message.link, self.tag)
         if config_dict['LEECH_LOG_ID']:
             msg = f'<b>Task Started</b>\n\n'
             msg += f'<b>• Task by:</b> {self.tag}\n'
