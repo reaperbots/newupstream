@@ -527,13 +527,13 @@ class MirrorLeechListener:
             await self.clean()
         else:
             await update_all_messages()
-
-          if self.isSuperGroup and config_dict['INCOMPLETE_TASK_NOTIFIER'] and DATABASE_URL:
-            await DbManger().rm_complete_task(self.message.link)
               
         if self.isSuperGroup and self.botpmmsg:
             await sendMessage(self.botpmmsg, msg)
         await five_minute_del(x)
+
+        if self.isSuperGroup and config_dict['INCOMPLETE_TASK_NOTIFIER'] and DATABASE_URL:
+            await DbManger().rm_complete_task(self.message.link)
         
         async with queue_dict_lock:
             if self.uid in queued_dl:
