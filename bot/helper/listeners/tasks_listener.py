@@ -75,8 +75,6 @@ class MirrorLeechListener:
             pass
         
     async def onDownloadStart(self):
-        if self.isSuperGroup and config_dict['INCOMPLETE_TASK_NOTIFIER'] and DATABASE_URL:
-            await DbManager().add_incomplete_task(self.message.chat.id, self.message.link, self.tag)
         if config_dict['LEECH_LOG_ID']:
             msg = f'<b>Task Started</b>\n\n'
             msg += f'<b>• Task by:</b> {self.tag}\n'
@@ -84,6 +82,8 @@ class MirrorLeechListener:
             self.linkslogmsg = await sendCustomMsg(config_dict['LEECH_LOG_ID'], msg)
         user_dict = user_data.get(self.message.from_user.id, {})
         self.botpmmsg = await sendCustomMsg(self.message.from_user.id, '<b>Task started</b>')
+          if self.isSuperGroup and config_dict['INCOMPLETE_TASK_NOTIFIER'] and DATABASE_URL:
+            await DbManager().add_incomplete_task(self.message.chat.id, self.message.link, self.tag)
 
     async def onDownloadComplete(self):
         multi_links = False
@@ -482,12 +482,10 @@ class MirrorLeechListener:
             await self.clean()
         else:
             await update_all_messages()
-
-        if self.isSuperGroup and config_dict['INCOMPLETE_TASK_NOTIFIER'] and DATABASE_URL:
-            await DbManager().rm_complete_task(self.message.link)
-     
         if self.isSuperGroup and self.botpmmsg:
             await sendMessage(self.botpmmsg, msg, button)
+            if self.isSuperGroup and config_dict['INCOMPLETE_TASK_NOTIFIER'] and DATABASE_URL:
+            await DbManager().rm_complete_task(self.message.link)
         await five_minute_del(x)
   
         async with queue_dict_lock:
@@ -530,11 +528,10 @@ class MirrorLeechListener:
               
         if self.isSuperGroup and self.botpmmsg:
             await sendMessage(self.botpmmsg, msg)
+               if self.isSuperGroup and config_dict['INCOMPLETE_TASK_NOTIFIER'] and DATABASE_URL:
+            await DbManager().rm_complete_task(self.message.link)
         await five_minute_del(x)
 
-        if self.isSuperGroup and config_dict['INCOMPLETE_TASK_NOTIFIER'] and DATABASE_URL:
-            await DbManager().rm_complete_task(self.message.link)
-        
         async with queue_dict_lock:
             if self.uid in queued_dl:
                 queued_dl[self.uid].set()
