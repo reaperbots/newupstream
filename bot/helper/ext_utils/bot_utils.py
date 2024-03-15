@@ -175,8 +175,7 @@ def get_readable_message():
         if download.status() not in [MirrorStatus.STATUS_SPLITTING, MirrorStatus.STATUS_SEEDING]:
             msg += f"\n<b>├</b><code>{progress_bar(download.progress())}</code> <b>{download.progress()}</b>"
             msg += f"\n<b>├Processed: </b>{download.processed_bytes()} of {download.size()}"
-            msg += f'\n<b>├ETA: </b>{download.eta()}'
-            msg += f"\n<b>├User: </b> {source(download)}"
+            msg += f"\n<b>├ETA: </b>{download.eta()} | User: </b> {source(download)}"
             if hasattr(download, 'seeders_num'):
                 try:
                     msg += f"\n<b>├S/L:</b> {download.seeders_num()}/{download.leechers_num()}"
@@ -210,7 +209,7 @@ def get_readable_message():
         buttons.ibutton(f"{PAGE_NO}/{PAGES}", "status ref")
         buttons.ibutton("Next", "status nex")
         button = buttons.build_menu(3)
-    msg += f"<b>Up: {currentTime} | Free: {get_readable_file_size(disk_usage('/usr/src/app/downloads/').free)} | DL: {get_readable_file_size(dl_speed)} | UL: {get_readable_file_size(up_speed)}</b>"
+    msg += f"<b>Up: {currentTime} | Free: {get_readable_file_size(disk_usage('/usr/src/app/downloads/').free)}</b>"
     return msg, button
 
 
