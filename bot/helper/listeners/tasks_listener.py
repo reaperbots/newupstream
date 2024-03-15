@@ -74,6 +74,10 @@ class MirrorLeechListener:
         except:
             pass
 
+     async def onDownloadStart(self):
+        if self.isSuperGroup and config_dict['INCOMPLETE_TASK_NOTIFIER'] and DATABASE_URL:
+            await DbManger().add_incomplete_task(self.message.chat.id, self.message.link, self.tag)
+
     async def onDownloadStart(self):
         if config_dict['LEECH_LOG_ID']:
             msg = f'<b>Task Started</b>\n\n'
@@ -338,7 +342,10 @@ class MirrorLeechListener:
             await update_all_messages()
             await RCTransfer.upload(up_path, size)
 
+
     async def onUploadComplete(self, link, size, files, folders, mime_type, name, rclonePath=''):
+        if self.isSuperGroup and config_dict['INCOMPLETE_TASK_NOTIFIER'] and DATABASE_URL:
+            await DbManger().rm_complete_task(self.message.link)
         user_id = self.message.from_user.id
         name, _ = await format_filename(name, user_id, isMirror=not self.isLeech)
         user_dict = user_data.get(user_id, {})
@@ -477,6 +484,10 @@ class MirrorLeechListener:
             await self.clean()
         else:
             await update_all_messages()
+            
+ if self.isSuperGroup and config_dict['INCOMPLETE_TASK_NOTIFIER'] and DATABASE_URL:
+            await DbManger().rm_complete_task(self.message.link)
+     
         if self.isSuperGroup and self.botpmmsg:
             await sendMessage(self.botpmmsg, msg, button)
         await five_minute_del(x)
@@ -518,6 +529,10 @@ class MirrorLeechListener:
             await self.clean()
         else:
             await update_all_messages()
+
+          if self.isSuperGroup and config_dict['INCOMPLETE_TASK_NOTIFIER'] and DATABASE_URL:
+            await DbManger().rm_complete_task(self.message.link)
+              
         if self.isSuperGroup and self.botpmmsg:
             await sendMessage(self.botpmmsg, msg)
         await five_minute_del(x)
