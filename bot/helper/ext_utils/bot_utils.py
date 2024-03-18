@@ -157,7 +157,7 @@ def source(self):
 
 
 def get_readable_message():
-    msg = ''
+    msg = '𝓟𝓸𝔀𝓮𝓻𝓮𝓭 𝓑𝔂 : <a href="t.me/acaatr">͎R͎͎e͎a͎͎p͎͎e͎͎r͎</a>'
     button = None
     tasks = len(download_dict)
     currentTime = get_readable_time(time() - botStartTime)
