@@ -157,7 +157,7 @@ def source(self):
 
 
 def get_readable_message():
-    msg = '<b>𝗣𝗼𝘄𝗲𝗿𝗲𝗱 𝗯𝘆  <a href="https://t.me/acaatr">𝕽𝖊𝖆𝖕𝖊𝖗</a></b>'
+    msg = '<b><a href="https://t.me/acaatr">Powered By Reaper</a></b>'
     button = None
     tasks = len(download_dict)
     currentTime = get_readable_time(time() - botStartTime)
@@ -190,7 +190,7 @@ def get_readable_message():
         else:
             msg += f"\n<b>├Size: {download.size()}</b>"
         msg += f"\n<b>└Past:</b> {get_readable_time(time() - download.message.date.timestamp())}"
-        msg += f"\n<b>「/stop_{download.gid()[:8]}」</b></blockquote></q>\n\n"
+        msg += f"\n<b>「/stop_{download.gid()[:8]}」</b>\n"
     if len(msg) == 0:
         return None, None
     dl_speed = 0
